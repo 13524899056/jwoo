@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jwaoo.account.mapper.LoginHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.jwaoo.account.model.LoginHistory" >
+    <id column="id" property="id"  />
+    <result column="uid" property="uid" />
+    <result column="client_id" property="clientId" jdbcType="VARCHAR" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="os_type" property="osType" jdbcType="TINYINT" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="source_ip" property="sourceIp" jdbcType="VARCHAR" />
+    <result column="hard_ware" property="hardWare" jdbcType="VARCHAR" />
+    <result column="device_token" property="deviceToken" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uid, client_id, channel_id, os_type, version, token, source_ip, hard_ware, 
+    device_token, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jwaoo.account.model.LoginHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from login_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from login_history
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from login_history
+    where id = #{id}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jwaoo.account.model.LoginHistoryExample" >
+    delete from login_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jwaoo.account.model.LoginHistory" >
+    insert into login_history (id, uid, client_id, 
+      channel_id, os_type, version, 
+      token, source_ip, hard_ware, 
+      device_token, create_time)
+    values (#{id}, #{uid}, #{clientId,jdbcType=VARCHAR}, 
+      #{channelId,jdbcType=INTEGER}, #{osType,jdbcType=TINYINT}, #{version,jdbcType=VARCHAR}, 
+      #{token,jdbcType=VARCHAR}, #{sourceIp,jdbcType=VARCHAR}, #{hardWare,jdbcType=VARCHAR}, 
+      #{deviceToken,jdbcType=VARCHAR}, now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.jwaoo.account.model.LoginHistory" >
+    insert into login_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="osType != null" >
+        os_type,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="sourceIp != null" >
+        source_ip,
+      </if>
+      <if test="hardWare != null" >
+        hard_ware,
+      </if>
+      <if test="deviceToken != null" >
+        device_token,
+      </if>
+        create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="uid != null" >
+        #{uid},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="osType != null" >
+        #{osType,jdbcType=TINYINT},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceIp != null" >
+        #{sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hardWare != null" >
+        #{hardWare,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceToken != null" >
+        #{deviceToken,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jwaoo.account.model.LoginHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from login_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update login_history
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid},
+      </if>
+      <if test="record.clientId != null" >
+        client_id = #{record.clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelId != null" >
+        channel_id = #{record.channelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.osType != null" >
+        os_type = #{record.osType,jdbcType=TINYINT},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.token != null" >
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceIp != null" >
+        source_ip = #{record.sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hardWare != null" >
+        hard_ware = #{record.hardWare,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceToken != null" >
+        device_token = #{record.deviceToken,jdbcType=VARCHAR}
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update login_history
+    set id = #{record.id},
+      uid = #{record.uid},
+      client_id = #{record.clientId,jdbcType=VARCHAR},
+      channel_id = #{record.channelId,jdbcType=INTEGER},
+      os_type = #{record.osType,jdbcType=TINYINT},
+      version = #{record.version,jdbcType=VARCHAR},
+      token = #{record.token,jdbcType=VARCHAR},
+      source_ip = #{record.sourceIp,jdbcType=VARCHAR},
+      hard_ware = #{record.hardWare,jdbcType=VARCHAR},
+      device_token = #{record.deviceToken,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jwaoo.account.model.LoginHistory" >
+    update login_history
+    <set >
+      <if test="uid != null" >
+        uid = #{uid},
+      </if>
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        channel_id = #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="osType != null" >
+        os_type = #{osType,jdbcType=TINYINT},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceIp != null" >
+        source_ip = #{sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hardWare != null" >
+        hard_ware = #{hardWare,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceToken != null" >
+        device_token = #{deviceToken,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jwaoo.account.model.LoginHistory" >
+    update login_history
+    set uid = #{uid},
+      client_id = #{clientId,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=INTEGER},
+      os_type = #{osType,jdbcType=TINYINT},
+      version = #{version,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      source_ip = #{sourceIp,jdbcType=VARCHAR},
+      hard_ware = #{hardWare,jdbcType=VARCHAR},
+      device_token = #{deviceToken,jdbcType=VARCHAR}
+    where id = #{id}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.jwaoo.account.model.LoginHistoryExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from login_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

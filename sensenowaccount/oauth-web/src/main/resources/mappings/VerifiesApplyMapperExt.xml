@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jwaoo.account.mapper.VerifiesApplyMapper" >
+    <resultMap id="BaseInfoResultMap" type="com.jwaoo.account.dto.VerifiesApplyDto" >
+        <id column="id" property="id" />
+        <result column="uid" property="uid" />
+        <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+        <result column="audio_url" property="audioUrl" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="TINYINT" />
+        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+    </resultMap>
+  <select id="findVerifyApplyById" resultMap="BaseInfoResultMap" parameterType="java.lang.Long" >
+    select 
+     va.*,u.nickname,u.gender,u.avatar,u.area_code,u.birthday
+    from verifies_apply va join account u on va.uid=u.id
+    where va.id=#{id}
+  </select>
+  <select id="findByCondition" resultMap="BaseInfoResultMap" parameterType="map" >
+    select
+     va.*,u.nickname,u.gender,u.avatar,u.area_code,u.birthday
+    from verifies_apply va join account u on va.uid=u.id
+    where 1=1
+      <if test="record.uid != null">
+          and va.uid = #{record.uid}
+      </if>
+      <if test="record.status != null">
+          and va.status = #{record.status}
+      </if>
+      <if test="record.nickname!=null">
+          and nickname like '%#{record.nickname}%'
+      </if>
+      <if test="record.gender != null">
+          and gender = #{record.gender}
+      </if>
+      <if test="record.areaCode != null">
+          and area_code = #{record.areaCode}
+      </if>
+      order by va.create_time desc
+      <if test="limit != null and num != null">
+          limit #{limit},#{num}
+      </if>
+  </select>
+  <select id="countByCondition" parameterType="com.jwaoo.account.dto.VerifiesApplyDto" resultType="java.lang.Integer" >
+    select count(1) from verifies_apply va join account u on va.uid=u.id
+      where 1=1
+      <if test="uid != null">
+          and uid = #{uid}
+      </if>
+      <if test="status != null">
+          and status = #{status}
+      </if>
+      <if test="nickname!=null">
+          and nickname like '%#{nickname}%'
+      </if>
+      <if test="gender != null">
+          and gender = #{gender}
+      </if>
+      <if test="areaCode != null">
+          and area_code = #{areaCode}
+      </if>
+  </select>
+</mapper>

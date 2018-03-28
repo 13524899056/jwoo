@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+    <property scope="context" name="pattern" value="%d %-5p %c - %m%n" />
+    <appender name="stdio" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>${pattern}</Pattern>
+        </encoder>
+    </appender>
+	
+    <!--<logger name="com.jwaoo" level="INFO"/>-->
+    <logger name="javax" level="WARN"/>
+    <logger name="ch" level="WARN"/>
+    <!--<logger name="com.codahale.metrics" level="WARN"/>
+    <logger name="com.ryantenney" level="WARN"/>
+    <logger name="com.sun.xml.internal.bind" level="WARN"/>
+    <logger name="com.zaxxer" level="WARN"/>-->
+    <logger name="io" level="WARN"/>
+    <logger name="net" level="WARN"/>
+    <logger name="org" level="WARN"/>
+    <logger name="sun" level="WARN"/>
+    <logger name="jdbc" level="WARN"/>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <root level="WARN">
+        <appender-ref ref="stdio"/>
+        <!--<appender-ref ref="stash"/>-->
+    </root>
+
+    <include resource="logback_release.xml" />
+</configuration>

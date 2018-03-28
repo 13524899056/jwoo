@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwaoo.account.mapper.AccountMapper">
+
+	<!-- 根据登陆名查询 -->
+	<select id="findByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account where email = #{account} or phone=#{account}
+	</select>
+
+	<!-- 根据用户mail查询 -->
+	<select id="findByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		where email = #{email}
+	</select>
+
+	<!-- 根据用户mail查询 -->
+	<select id="findByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		where phone = #{phone}
+	</select>
+
+    <!-- 根据用户nickname查询 -->
+    <select id="findByNickname" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from account
+        where nickname = #{nickname}
+        <if test="id != null" >
+            and id != #{id}
+        </if>
+    </select>
+
+	<!-- 根据主键查询 -->
+	<select id="findById" parameterType="java.lang.Long"  resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		where id = #{id}
+	</select>
+
+	<select id="findByUuid" parameterType="java.lang.String"  resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		where uuid = #{uuid}
+	</select>
+
+	<!-- 查询所有 -->
+	<select id="findAllList"  resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account
+        <if test="size!=null">
+            limit #{limit},#{size}
+        </if>
+	</select>
+
+	<select id="findAll"  resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account where status=0
+	</select>
+
+    <!-- 查询全部用户数目 -->
+    <select id="findAllCount" resultType="long">
+        SELECT COUNT(1)
+        FROM account
+    </select>
+
+    <!-- 根据主键修改 -->
+    <update id="updateById" parameterType="com.jwaoo.account.model.Account">
+        update account
+        set
+        nickname = #{nickname,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        gender = #{gender},
+        area_code = #{areaCode,jdbcType=VARCHAR},
+        level = #{level,jdbcType=VARCHAR},
+        avatar = #{avatar,jdbcType=VARCHAR},
+        birthday = #{birthday},
+        instr = #{instr,jdbcType=VARCHAR},
+        status = #{status,jdbcType=TINYINT}
+        where id = #{id}
+    </update>
+
+    <select id="selectAccountInfo" resultType="com.jwaoo.account.dto.AccountDto" parameterType="java.lang.Long">
+        call acct_info(#{uid})
+    </select>
+
+</mapper>

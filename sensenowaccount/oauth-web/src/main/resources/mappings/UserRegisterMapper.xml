@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jwaoo.account.mapper.UserRegisterMapper" >
+  <resultMap id="BaseResultMap" type="com.jwaoo.account.model.UserRegister" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="os_type" property="osType" jdbcType="TINYINT" />
+    <result column="os_version" property="osVersion" jdbcType="VARCHAR" />
+    <result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+    <result column="hard_ware" property="hardWare" jdbcType="VARCHAR" />
+    <result column="client_id" property="clientId" jdbcType="VARCHAR" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="client_version" property="clientVersion" jdbcType="VARCHAR" />
+    <result column="oauth_type" property="oauthType" jdbcType="TINYINT" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="source_ip" property="sourceIp" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="register_status" property="registerStatus" jdbcType="TINYINT" />
+    <result column="del_flg" property="delFlg" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, os_type, os_version, device_no, hard_ware, client_id, channel_id,
+    client_version, oauth_type, open_id, source_ip, area, register_status, del_flg, create_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jwaoo.account.model.UserRegisterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_register
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_register
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jwaoo.account.model.UserRegisterExample" >
+    delete from user_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jwaoo.account.model.UserRegister" >
+    insert into user_register (uuid, os_type,
+      os_version, device_no, hard_ware, 
+      client_id, channel_id, client_version, 
+      oauth_type, open_id, source_ip, 
+      area, register_status, del_flg, 
+      create_time, update_time)
+    values (#{uuid,jdbcType=VARCHAR}, #{osType,jdbcType=TINYINT},
+      #{osVersion,jdbcType=VARCHAR}, #{deviceNo,jdbcType=VARCHAR}, #{hardWare,jdbcType=VARCHAR}, 
+      #{clientId,jdbcType=VARCHAR}, #{channelId,jdbcType=INTEGER}, #{clientVersion,jdbcType=VARCHAR}, 
+      #{oauthType,jdbcType=TINYINT}, #{openId,jdbcType=VARCHAR}, #{sourceIp,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{registerStatus,jdbcType=TINYINT}, #{delFlg,jdbcType=TINYINT}, 
+      now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.jwaoo.account.model.UserRegister" >
+    insert into user_register
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="osType != null" >
+        os_type,
+      </if>
+      <if test="osVersion != null" >
+        os_version,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="hardWare != null" >
+        hard_ware,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="clientVersion != null" >
+        client_version,
+      </if>
+      <if test="oauthType != null" >
+        oauth_type,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="sourceIp != null" >
+        source_ip,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="registerStatus != null" >
+        register_status,
+      </if>
+      <if test="delFlg != null" >
+        del_flg,
+      </if>
+        create_time,
+        update_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="osType != null" >
+        #{osType,jdbcType=TINYINT},
+      </if>
+      <if test="osVersion != null" >
+        #{osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hardWare != null" >
+        #{hardWare,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="clientVersion != null" >
+        #{clientVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthType != null" >
+        #{oauthType,jdbcType=TINYINT},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceIp != null" >
+        #{sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="registerStatus != null" >
+        #{registerStatus,jdbcType=TINYINT},
+      </if>
+      <if test="delFlg != null" >
+        #{delFlg,jdbcType=TINYINT},
+      </if>
+        now(),
+        now()
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jwaoo.account.model.UserRegisterExample" resultType="java.lang.Integer" >
+    select count(*) from user_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_register
+    <set >
+      <if test="record.osType != null" >
+        os_type = #{record.osType,jdbcType=TINYINT},
+      </if>
+      <if test="record.osVersion != null" >
+        os_version = #{record.osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceNo != null" >
+        device_no = #{record.deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hardWare != null" >
+        hard_ware = #{record.hardWare,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientId != null" >
+        client_id = #{record.clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelId != null" >
+        channel_id = #{record.channelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.clientVersion != null" >
+        client_version = #{record.clientVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oauthType != null" >
+        oauth_type = #{record.oauthType,jdbcType=TINYINT},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sourceIp != null" >
+        source_ip = #{record.sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerStatus != null" >
+        register_status = #{record.registerStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.delFlg != null" >
+        del_flg = #{record.delFlg,jdbcType=TINYINT},
+      </if>
+        update_time = now()
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_register
+    set
+      os_type = #{record.osType,jdbcType=TINYINT},
+      os_version = #{record.osVersion,jdbcType=VARCHAR},
+      device_no = #{record.deviceNo,jdbcType=VARCHAR},
+      hard_ware = #{record.hardWare,jdbcType=VARCHAR},
+      client_id = #{record.clientId,jdbcType=VARCHAR},
+      channel_id = #{record.channelId,jdbcType=INTEGER},
+      client_version = #{record.clientVersion,jdbcType=VARCHAR},
+      oauth_type = #{record.oauthType,jdbcType=TINYINT},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      source_ip = #{record.sourceIp,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      register_status = #{record.registerStatus,jdbcType=TINYINT},
+      del_flg = #{record.delFlg,jdbcType=TINYINT},
+      update_time = now()
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jwaoo.account.model.UserRegister" >
+    update user_register
+    <set >
+      <if test="osType != null" >
+        os_type = #{osType,jdbcType=TINYINT},
+      </if>
+      <if test="osVersion != null" >
+        os_version = #{osVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hardWare != null" >
+        hard_ware = #{hardWare,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        channel_id = #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="clientVersion != null" >
+        client_version = #{clientVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="oauthType != null" >
+        oauth_type = #{oauthType,jdbcType=TINYINT},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceIp != null" >
+        source_ip = #{sourceIp,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="registerStatus != null" >
+        register_status = #{registerStatus,jdbcType=TINYINT},
+      </if>
+      <if test="delFlg != null" >
+        del_flg = #{delFlg,jdbcType=TINYINT},
+      </if>
+        update_time = now()
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jwaoo.account.model.UserRegister" >
+    update user_register
+    set
+      os_type = #{osType,jdbcType=TINYINT},
+      os_version = #{osVersion,jdbcType=VARCHAR},
+      device_no = #{deviceNo,jdbcType=VARCHAR},
+      hard_ware = #{hardWare,jdbcType=VARCHAR},
+      client_id = #{clientId,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=INTEGER},
+      client_version = #{clientVersion,jdbcType=VARCHAR},
+      oauth_type = #{oauthType,jdbcType=TINYINT},
+      open_id = #{openId,jdbcType=VARCHAR},
+      source_ip = #{sourceIp,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      register_status = #{registerStatus,jdbcType=TINYINT},
+      del_flg = #{delFlg,jdbcType=TINYINT},
+      update_time = now()
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.jwaoo.account.model.UserRegisterExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

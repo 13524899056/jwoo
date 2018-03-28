@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jwaoo.account.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jwaoo.account.model.UserInfo" >
+    <id column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="ssn_no" property="ssnNo" jdbcType="VARCHAR" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+    <result column="vip" property="vip" jdbcType="TINYINT" />
+    <result column="vip_end_time" property="vipEndTime" jdbcType="TIMESTAMP" />
+    <result column="is_verified" property="isVerified" jdbcType="TINYINT" />
+    <result column="exp" property="exp" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="SMALLINT" />
+    <result column="gold" property="gold" jdbcType="BIGINT" />
+    <result column="coin" property="coin" jdbcType="BIGINT" />
+    <result column="f_coin" property="fCoin" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, ssn_no, pay_password, vip, vip_end_time, is_verified, exp, level, gold, coin, 
+    f_coin, balance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jwaoo.account.model.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_info
+    where uid = #{uid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jwaoo.account.model.UserInfoExample" >
+    delete from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jwaoo.account.model.UserInfo" >
+    insert into user_info (uid, ssn_no, pay_password, 
+      vip, vip_end_time, is_verified, 
+      exp, level, gold, coin, 
+      f_coin, balance)
+    values (#{uid,jdbcType=BIGINT}, #{ssnNo,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, 
+      #{vip,jdbcType=TINYINT}, #{vipEndTime,jdbcType=TIMESTAMP}, #{isVerified,jdbcType=TINYINT}, 
+      #{exp,jdbcType=INTEGER}, #{level,jdbcType=SMALLINT}, #{gold,jdbcType=BIGINT}, #{coin,jdbcType=BIGINT}, 
+      #{fCoin,jdbcType=INTEGER}, #{balance,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jwaoo.account.model.UserInfo" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="ssnNo != null" >
+        ssn_no,
+      </if>
+      <if test="payPassword != null" >
+        pay_password,
+      </if>
+      <if test="vip != null" >
+        vip,
+      </if>
+      <if test="vipEndTime != null" >
+        vip_end_time,
+      </if>
+      <if test="isVerified != null" >
+        is_verified,
+      </if>
+      <if test="exp != null" >
+        exp,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="gold != null" >
+        gold,
+      </if>
+      <if test="coin != null" >
+        coin,
+      </if>
+      <if test="fCoin != null" >
+        f_coin,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="ssnNo != null" >
+        #{ssnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="vip != null" >
+        #{vip,jdbcType=TINYINT},
+      </if>
+      <if test="vipEndTime != null" >
+        #{vipEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isVerified != null" >
+        #{isVerified,jdbcType=TINYINT},
+      </if>
+      <if test="exp != null" >
+        #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="gold != null" >
+        #{gold,jdbcType=BIGINT},
+      </if>
+      <if test="coin != null" >
+        #{coin,jdbcType=BIGINT},
+      </if>
+      <if test="fCoin != null" >
+        #{fCoin,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jwaoo.account.model.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_info
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ssnNo != null" >
+        ssn_no = #{record.ssnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPassword != null" >
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vip != null" >
+        vip = #{record.vip,jdbcType=TINYINT},
+      </if>
+      <if test="record.vipEndTime != null" >
+        vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isVerified != null" >
+        is_verified = #{record.isVerified,jdbcType=TINYINT},
+      </if>
+      <if test="record.exp != null" >
+        exp = #{record.exp,jdbcType=INTEGER},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=SMALLINT},
+      </if>
+      <if test="record.gold != null" >
+        gold = #{record.gold,jdbcType=BIGINT},
+      </if>
+      <if test="record.coin != null" >
+        coin = #{record.coin,jdbcType=BIGINT},
+      </if>
+      <if test="record.fCoin != null" >
+        f_coin = #{record.fCoin,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_info
+    set uid = #{record.uid,jdbcType=BIGINT},
+      ssn_no = #{record.ssnNo,jdbcType=VARCHAR},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      vip = #{record.vip,jdbcType=TINYINT},
+      vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
+      is_verified = #{record.isVerified,jdbcType=TINYINT},
+      exp = #{record.exp,jdbcType=INTEGER},
+      level = #{record.level,jdbcType=SMALLINT},
+      gold = #{record.gold,jdbcType=BIGINT},
+      coin = #{record.coin,jdbcType=BIGINT},
+      f_coin = #{record.fCoin,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jwaoo.account.model.UserInfo" >
+    update user_info
+    <set >
+      <if test="ssnNo != null" >
+        ssn_no = #{ssnNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="vip != null" >
+        vip = #{vip,jdbcType=TINYINT},
+      </if>
+      <if test="vipEndTime != null" >
+        vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isVerified != null" >
+        is_verified = #{isVerified,jdbcType=TINYINT},
+      </if>
+      <if test="exp != null" >
+        exp = #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="gold != null" >
+        gold = #{gold,jdbcType=BIGINT},
+      </if>
+      <if test="coin != null" >
+        coin = #{coin,jdbcType=BIGINT},
+      </if>
+      <if test="fCoin != null" >
+        f_coin = #{fCoin,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=BIGINT},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jwaoo.account.model.UserInfo" >
+    update user_info
+    set ssn_no = #{ssnNo,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      vip = #{vip,jdbcType=TINYINT},
+      vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP},
+      is_verified = #{isVerified,jdbcType=TINYINT},
+      exp = #{exp,jdbcType=INTEGER},
+      level = #{level,jdbcType=SMALLINT},
+      gold = #{gold,jdbcType=BIGINT},
+      coin = #{coin,jdbcType=BIGINT},
+      f_coin = #{fCoin,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=BIGINT}
+    where uid = #{uid,jdbcType=BIGINT}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.jwaoo.account.model.UserInfoExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
